@@ -1,8 +1,8 @@
 # create your drupal and postgres config here, based off the last assignment
-version: '2'
+version: '3.1'
 services:
         drupal:
-                image: drupal
+                image: drupal:8.2
                 ports:
                         - "8080:80"
                 volumes:
@@ -13,7 +13,12 @@ services:
         postgres:
                 image: postgres
                 environment:
-                        - POSTGRES_PASSWORD=mypasswd
+                        - POSTGRES_PASSWORD_FILE=/run/secrets/psql-pw
+                secrets:
+                        - psql-pw
+secrets:
+        psql-pw:
+                external: true
 volumes:
        drupal-modules:
        drupal-profiles:
